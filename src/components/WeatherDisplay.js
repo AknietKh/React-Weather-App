@@ -1,4 +1,5 @@
 import React from 'react';
+import {RequestError} from './RequestError';
 import '../App.css';
 
 class WeatherDisplay extends React.Component {
@@ -6,7 +7,8 @@ class WeatherDisplay extends React.Component {
     super(props);
     this.fetchData = this.fetchData.bind(this);
     this.state = {
-      weatherData: null
+      weatherData: null,
+      err: null
     }
   }
 
@@ -18,14 +20,17 @@ class WeatherDisplay extends React.Component {
       if (response.ok) {
         return response.json(); 
       } else {
-        throw new Error('Данные не были получены, ошибка: ' + response.status);
+        throw response.status
       }
     })
     .then(data => {
       this.setState({weatherData: data});
     })
     .catch(err => {
-      console.warn(err);
+      console.warn('Данные не были получены, ошибка: ' + err);
+      this.setState({
+        err: err
+      })
     })
   }
 
@@ -39,9 +44,14 @@ class WeatherDisplay extends React.Component {
   }
 
   render() {
-    const {weatherData} = this.state;
+    const {weatherData, err} = this.state;
+    if (err) return <RequestError errStatus={err}/>
+    else if (!weatherData) {
+      console.log("load");
+      return <div className=" weather-display weather-display__loader">Loading...</div>
+    }
+    
 
-    if (!weatherData) return <div className="weather-display__loader">Loading...</div>
     const weather = weatherData.weather[0];
     const weatherIcon = `http://openweathermap.org/img/wn/${weather.icon}.png`
     
