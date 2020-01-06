@@ -73,3 +73,9 @@
   /* color:#4b636e; */
   margin: 5px 0;
 }
+
+.city-status {
+  display: flex;
+  font-size: 32px;
+  margin: 10px 0;
+}
