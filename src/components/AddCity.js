@@ -19,6 +19,7 @@ function AddCity(props) {
         className="search-wrapper_input"
         onChange={handleChange}
         value={props.value}
+        placeholder="Погода в вашем городе..."
       />
       <button className="search-btn" onClick={handleClick}></button>
 		</div>
