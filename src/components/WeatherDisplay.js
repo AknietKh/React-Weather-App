@@ -29,7 +29,11 @@ class WeatherDisplay extends React.Component {
       }
     })
     .then(data => {
-      this.setState({weatherData: data, loading: false});
+      this.setState({
+        weatherData: data,
+        loading: false,
+        err: null
+      });
     })
     .catch(err => {
       console.warn('Данные не были получены, ошибка: ' + err);
@@ -69,10 +73,10 @@ class WeatherDisplay extends React.Component {
           <p className="weather-info__item">Температура: {weatherData.main.temp}°</p>
           <p className="weather-info__item">По ощущению: {weatherData.main.feels_like}°</p>
           <p className="weather-info__item">Ветер: {weatherData.wind.speed} м/с</p>
-          <p className="weather-info__item">Облачность: {weather.description}</p>
+          <p className="weather-info__item">Статус: {weather.description}</p>
           <p className="weather-info__item">Давление: {(weatherData.main.pressure *  0.75006375541921).toFixed(2)} мм рт. ст.</p>
           <p className="weather-info__item">Влажность: {weatherData.main.humidity}%</p>
-          <p className="weather-info__item">Координаты: {`[${weatherData.coord.lat}, ${weatherData.coord.lon}]`}</p>
+          <p className="weather-info__item">Координаты: {`[${weatherData.coord.lat}, ${weatherData.coord.lon}]; ${weatherData.sys.country}`}</p>
         </div>
       </div>
     )
