@@ -8,10 +8,10 @@ function RequestError(props) {
       <div className="weather-display__error">
         <h2>Произошла ошибка!</h2>
         {
-          (errStatus >= 400 && errStatus < 500)  && 
+          (errStatus >= 400 && errStatus < 500)  &&  
           <p>
-            Ошибка {errStatus} (Not Found). Данные не были получены, попробуйте еще раз.<br/>
-            Или попробуйте ввести название города на английском.
+            Ошибка {errStatus} (Not Found).Город не найден в базе.<br/>
+            Попробуйте ввести название на английском или попробуйте изменить поисковый запрос
           </p>
         }
         {
