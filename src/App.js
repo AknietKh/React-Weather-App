@@ -26,10 +26,21 @@ class App extends React.Component {
     this.handleCityClick = this.handleCityClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearchBtn = this.handleSearchBtn.bind(this);
+    this.validate = this.validate.bind(this);
     this.state = {
       activeCityId: null,
       value: ''
     }
+  }
+
+  validate(value) {
+    if (!value) return false;
+
+    for (let i = 0; i < CITIES.length; i++) {
+      if (CITIES[i].city === value) return false;
+    }
+    
+    return true;
   }
 
   handleCityClick(activeCity) {
@@ -43,19 +54,19 @@ class App extends React.Component {
 
   handleSearchBtn(event) {
     const {value} = this.state;
-    // console.log(value);
-    // console.log(CITIES);
-    const newCity = {
-      id: CITIES.length + 1,
-      city: value
+    const validateResult = this.validate(value);
+  
+    if (validateResult) {
+      const newCity = {
+        id: CITIES.length + 1,
+        city: value
+      }
+      CITIES.push(newCity);
+      this.setState({activeCityId: newCity.id, value: ''})
     }
-    CITIES.push(newCity);
-    // console.log(CITIES);
-    this.setState({activeCityId: newCity.id, value: ''})
   }
 
   render() {
-    console.log(CITIES);
     const {activeCityId, value} = this.state;
     let activeCity;
     CITIES.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
