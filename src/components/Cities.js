@@ -9,7 +9,7 @@ class Cities extends React.Component {
 
     return (
       <div className="cities-wrapper">
-        <h2 className="cities-wrapper__label">Select a city</h2>
+        <h2 className="cities-wrapper__label">Выберите город</h2>
         <div className="cities">
           {data.map(element => 
               <CityBtn 
