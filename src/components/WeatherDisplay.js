@@ -1,5 +1,6 @@
 import React from 'react';
 import {RequestError} from './RequestError';
+import {Loader} from './Loader';
 import '../App.css';
 
 class WeatherDisplay extends React.Component {
@@ -8,7 +9,8 @@ class WeatherDisplay extends React.Component {
     this.fetchData = this.fetchData.bind(this);
     this.state = {
       weatherData: null,
-      err: null
+      err: null,
+      loading: true
     }
   }
 
@@ -16,6 +18,9 @@ class WeatherDisplay extends React.Component {
     const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
     const URL = 'http://api.openweathermap.org/data/2.5/weather?q=' + 
                 activeCity + `&units=metric&lang=ru&APPID=${APPID}`;
+
+    this.setState({loading: true});
+
     fetch(URL).then(response => {
       if (response.ok) {
         return response.json(); 
@@ -24,15 +29,14 @@ class WeatherDisplay extends React.Component {
       }
     })
     .then(data => {
-      this.setState({weatherData: data});
+      this.setState({weatherData: data, loading: false});
     })
     .catch(err => {
       console.warn('Данные не были получены, ошибка: ' + err);
       this.setState({
         err: err
       })
-    })
-  }
+    })  }
 
   componentDidMount() {
     const {activeCity} = this.props;
@@ -44,16 +48,10 @@ class WeatherDisplay extends React.Component {
   }
 
   render() {
-    const {weatherData, err} = this.state;
-    if (err) return <RequestError errStatus={err}/>
-    else if (!weatherData) {
-      return (
-        <div className="weather-display">
-          <p className="weather-display__loader">Loading...</p>
-        </div>
-      )
-    }
+    const {weatherData, err, loading} = this.state;
     
+    if (err) return <RequestError errStatus={err}/>;
+    else if (loading) return <Loader/>;
 
     const weather = weatherData.weather[0];
     const weatherIcon = `http://openweathermap.org/img/wn/${weather.icon}.png`
