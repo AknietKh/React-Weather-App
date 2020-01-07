@@ -47,8 +47,11 @@ class WeatherDisplay extends React.Component {
     const {weatherData, err} = this.state;
     if (err) return <RequestError errStatus={err}/>
     else if (!weatherData) {
-      console.log("load");
-      return <div className=" weather-display weather-display__loader">Loading...</div>
+      return (
+        <div className="weather-display">
+          <p className="weather-display__loader">Loading...</p>
+        </div>
+      )
     }
     
 

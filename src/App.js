@@ -23,7 +23,7 @@ class App extends React.Component {
     super(props);
     this.handleCityClick = this.handleCityClick.bind(this);
     this.state = {
-      activeCityId: 1
+      activeCityId: null
     }
   }
 
@@ -48,9 +48,14 @@ class App extends React.Component {
             onCityClick={this.handleCityClick} 
             activeCityId={activeCityId}
           />
-          <WeatherDisplay
-            activeCity={activeCity}
-          />
+          {
+            activeCityId ? 
+            <WeatherDisplay activeCity={activeCity}/> : 
+            <div className="weather-display">
+              <p className="weather-display__loader">Выберите город</p>
+            </div>
+          }
+          
         </main>
       </React.Fragment>
     )

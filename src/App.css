@@ -81,6 +81,10 @@
   justify-content: center;
 }
 
+.weather-display__loader {
+  font-size: 32px;
+}
+
 .weather-display__error {
   border: 1px solid #d32f2f;
   border-radius: 10px;
