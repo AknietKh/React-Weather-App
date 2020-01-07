@@ -9,7 +9,10 @@ function RequestError(props) {
         <h2>Произошла ошибка!</h2>
         {
           (errStatus >= 400 && errStatus < 500)  && 
-          <p>Ошибка {errStatus} (Not Found). Данные не были получены, попробуйте еще раз.</p>
+          <p>
+            Ошибка {errStatus} (Not Found). Данные не были получены, попробуйте еще раз.<br/>
+            Или попробуйте ввести название города на английском.
+          </p>
         }
         {
           (errStatus >= 500 && errStatus < 600)  && 
