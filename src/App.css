@@ -1,27 +1,72 @@
 .header {
-  width: 1280px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0 10px;
   color: #1565c0;
 }
 
 .header__line {
   border: none; 
-    color: #1565c0; 
-    background-color: #1565c0; 
-    height: 1px;
-    margin-bottom: 30px; 
+  color: #1565c0; 
+  background-color: #1565c0; 
+  height: 2px;
+  margin-bottom: 30px; 
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
 }
 
 .main-info {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
+  /* padding: 0 5px; */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
+.search {
+  display: flex;
+  margin-bottom: 25px;
+  width: 35%;
+}
+
+.search-wrapper_input {
+  width: 80%;
+  height: 40px;
+  border: 2px solid #1565c0;
+  border-radius: 10px;
+  font-size: 18px;
+  padding-left: 10px;
+  margin-right: 10px;
+  box-shadow: none;
+}
+
+.search-btn {
+  width: 15%;
+  min-width: 50px;
+  height: 46px;
+  border-radius: 10px;
+  border: 2px solid #1565c0;
+  background-color: #5e92f3;
+}
+.search-btn::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath fill='%23fff' d='M9.996 17.991a7.996 7.996 0 117.995-7.995 1 1 0 01-2 0 5.996 5.996 0 10-1.756 4.24l.707-.708 7.115 7.115a1 1 0 01-1.414 1.414l-5.745-5.745a7.967 7.967 0 01-4.902 1.68z'/%3E%3C/svg%3E");
+}
+
 .cities-wrapper {
-  border: 1px solid #1565c0;
+  border: 2px solid #1565c0;
   border-radius: 10px;
   width: 20%;
   padding-bottom: 10px;
@@ -34,6 +79,7 @@
 .cities {
   display: flex;
   flex-direction: column;
+  padding: 0 1px;
 }
 
 .city {
@@ -46,8 +92,6 @@
 }
 
 .city:hover {
-  /* border: 1px solid #5e92f3; */
-  border-radius: 5px;
   background-color: #5e92f3;
   color: #ffffff;
 }
@@ -59,7 +103,6 @@
   background-color: #ffffff;
   border: none;
   color: #1565c0;
-  border-radius: 5px;
   background-color: #1565c0;
   color: #ffffff;
 }
@@ -76,7 +119,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #1565c0;
+  border: 2px solid #1565c0;
   border-radius: 10px;
   justify-content: center;
 }
@@ -86,7 +129,7 @@
 }
 
 .weather-display__error {
-  border: 1px solid #d32f2f;
+  border: 2px solid #d32f2f;
   border-radius: 10px;
   padding: 0 10px;
   margin: auto;
