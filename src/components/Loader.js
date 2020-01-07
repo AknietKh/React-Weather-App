@@ -4,10 +4,10 @@ import '../App.css';
 function Loader(props) {
   return (
     <div className="weather-display">
-      <div class="load-5">
-        <div class="ring-2">
-          <div class="ball-holder">
-            <div class="ball"></div>
+      <div className="load-5">
+        <div className="ring-2">
+          <div className="ball-holder">
+            <div className="ball"></div>
           </div>
         </div>
       </div>
