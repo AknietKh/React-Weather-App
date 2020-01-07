@@ -37,7 +37,8 @@ class App extends React.Component {
   }
 
   handleInputChange(input) {
-    this.setState({value: input.value});
+    const value = input.value.slice(0,1).toUpperCase() + input.value.slice(1).toLowerCase();
+    this.setState({value: value});
   }
 
   handleSearchBtn(event) {
@@ -50,12 +51,12 @@ class App extends React.Component {
     }
     CITIES.push(newCity);
     // console.log(CITIES);
-    this.setState({activeCityId: newCity.id})
+    this.setState({activeCityId: newCity.id, value: ''})
   }
 
   render() {
     console.log(CITIES);
-    const {activeCityId} = this.state;
+    const {activeCityId, value} = this.state;
     let activeCity;
     CITIES.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
 
@@ -67,6 +68,7 @@ class App extends React.Component {
         <hr className="header__line"></hr>
         <main className="main-wrapper">
           <AddCity  
+            value={value}
             onChange={this.handleInputChange}
             onClick={this.handleSearchBtn}
           />

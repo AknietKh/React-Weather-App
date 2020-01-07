@@ -18,6 +18,7 @@ function AddCity(props) {
         type="text" 
         className="search-wrapper_input"
         onChange={handleChange}
+        value={props.value}
       />
       <button className="search-btn" onClick={handleClick}></button>
 		</div>
