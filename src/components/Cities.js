@@ -3,21 +3,9 @@ import {CityBtn} from './CityBtn';
 import '../App.css';
 
 class Cities extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.handleCityClick = this.handleCityClick.bind(this);
-  //   this.state = {
-  //     activeCityId: 1
-  //   }
-  // };
-
-  // handleCityClick(activeCity) {
-  //   this.setState({activeCityId: activeCity.id})
-  // }
 
   render() {
     const {data, onCityClick, activeCityId} = this.props;
-    // const {} = this.state;
 
     return (
       <div className="cities-wrapper">
