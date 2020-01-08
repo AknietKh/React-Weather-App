@@ -6,10 +6,26 @@ function CityBtn(props) {
    props.onCityClick(e.target);
   }
 
+  function handleDeleteBtnClick(e) {
+    e.preventDefault();
+    props.onDeleteBtnClick(e.target);
+  }
+
   return (
     +props.activeCityId === props.id ?
-    <div id={props.id} className="city__active" onClick={hadleClick}>{props.name}</div> : 
-    <div id={props.id} className="city" onClick={hadleClick}>{props.name}</div>
+      <div className="city-wrapper city__active">
+        <div id={props.id} className="city" onClick={hadleClick}>
+          {props.name}
+        </div>
+        <button id={props.id} className="delete-city" onClick={handleDeleteBtnClick}>Удалить</button>
+      </div> 
+    : 
+      <div className="city-wrapper">
+        <div id={props.id} className="city" onClick={hadleClick}>
+        {props.name}
+        </div>
+        <button id={props.id} className="delete-city" onClick={handleDeleteBtnClick}>Удалить</button>
+      </div>
   )
 }
 

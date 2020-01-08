@@ -5,7 +5,7 @@ import {AddCity} from './components/AddCity';
 import './App.css'
 // import { CityBtn } from './components/CityBtn';
 
-const CITIES = [
+let CITIES = [
   {
     "id": 1,
     "city": "Qaraghandy"
@@ -23,21 +23,26 @@ const CITIES = [
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleCityClick = this.handleCityClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearchBtn = this.handleSearchBtn.bind(this);
+    this.handleDeleteCityBtnClick = this.handleDeleteCityBtnClick.bind(this);
     this.validate = this.validate.bind(this);
+
     this.state = {
+      cities: CITIES,
       activeCityId: null,
       value: ''
     }
   }
 
   validate(value) {
+    const {cities} = this.state;
     if (!value) return false;
 
-    for (let i = 0; i < CITIES.length; i++) {
-      if (CITIES[i].city === value) return false;
+    for (let i = 0; i < cities.length; i++) {
+      if (cities[i].city === value) return false;
     }
     
     return true;
@@ -53,23 +58,43 @@ class App extends React.Component {
   }
 
   handleSearchBtn(event) {
-    const {value} = this.state;
+    const {cities, value} = this.state;
     const validateResult = this.validate(value);
+    const citiesClone = cities.slice();
   
     if (validateResult) {
       const newCity = {
-        id: CITIES.length + 1,
+        id: cities[cities.length-1].id + 1,
         city: value
       }
-      CITIES.push(newCity);
-      this.setState({activeCityId: newCity.id, value: ''})
+      citiesClone.push(newCity);
+      
+      this.setState({
+        cities: citiesClone,
+        activeCityId: newCity.id, 
+        value: ''
+      })
     }
   }
 
+  handleDeleteCityBtnClick(deleteBtn) {
+    const {cities} = this.state;
+    const citiesClone = cities.slice();
+    
+    for (let i = 0; i < citiesClone.length; i++) {
+      if (citiesClone[i].id === +deleteBtn.id) citiesClone.splice(i, 1);
+    }
+    
+    this.setState({
+      activeCityId: '',
+      cities: citiesClone
+    });
+  }
+
   render() {
-    const {activeCityId, value} = this.state;
+    const {cities, activeCityId, value} = this.state;
     let activeCity;
-    CITIES.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
+    cities.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
 
     return (
       <React.Fragment>
@@ -85,9 +110,10 @@ class App extends React.Component {
           />
           <div className='main-info'>
             <Cities 
-              data={CITIES} 
+              data={cities} 
               onCityClick={this.handleCityClick} 
               activeCityId={activeCityId}
+              onDeleteCityBtnClick={this.handleDeleteCityBtnClick}
             />
             {
               activeCityId ? 
