@@ -19,3 +19,4 @@ The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
 ![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/weather-app.png)
+![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/weather-app_work-state.png)
