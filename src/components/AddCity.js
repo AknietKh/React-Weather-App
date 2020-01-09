@@ -13,16 +13,20 @@ function AddCity(props) {
   }
 
   return (
-    <div className="search">
+    <div className="search-wrapper">
+      <div className="search">
       <input 
         type="text" 
-        className="search-wrapper_input"
+        className="search_input"
         onChange={handleChange}
         value={props.value}
         placeholder="Погода в вашем городе..."
       />
-      <button className="search-btn" onClick={handleClick}></button>
+      <button className="search_btn" onClick={handleClick}></button>
 		</div>
+    {props.searchErr === 'no value' && <div className="search-err-message"><span>Необходимо ввести название города</span></div>}
+    {props.searchErr === 'duplicate' && <div className="search-err-message"><span>Данный город уже был добавлен ранее</span></div>}
+    </div>
   );
 }
 

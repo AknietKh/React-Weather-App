@@ -33,19 +33,22 @@ class App extends React.Component {
     this.state = {
       cities: CITIES,
       activeCityId: null,
-      value: ''
+      value: '',
+      searchErr: ''
     }
   }
-
+ 
+  //функция валидации для поиска. Не дает добавить город, если ничего не введенно в поиск
+  //так же не дает добавить город, который уже есть в navbar
   validate(value) {
     const {cities} = this.state;
-    if (!value) return false;
+    if (!value) return 'no value';
 
     for (let i = 0; i < cities.length; i++) {
-      if (cities[i].city === value) return false;
+      if (cities[i].city === value) return 'duplicate';
     }
     
-    return true;
+    return 'true';
   }
 
   handleCityClick(activeCity) {
@@ -61,8 +64,9 @@ class App extends React.Component {
     const {cities, value} = this.state;
     const validateResult = this.validate(value);
     const citiesClone = cities.slice();
+    
   
-    if (validateResult) {
+    if (validateResult === 'true') {
       const newCity = {
         id: cities[cities.length-1].id + 1,
         city: value
@@ -72,9 +76,13 @@ class App extends React.Component {
       this.setState({
         cities: citiesClone,
         activeCityId: newCity.id, 
-        value: ''
+        value: '',
+        searchErr: ''
       })
-    }
+    } else if (validateResult === 'duplicate') {
+      this.setState({value: '', searchErr: 'duplicate'})
+    } else this.setState({searchErr: 'no value'})
+
   }
 
   handleDeleteCityBtnClick(deleteBtn) {
@@ -92,7 +100,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {cities, activeCityId, value} = this.state;
+    const {cities, activeCityId, value, searchErr} = this.state;
     let activeCity;
     cities.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
 
@@ -107,6 +115,7 @@ class App extends React.Component {
             value={value}
             onChange={this.handleInputChange}
             onClick={this.handleSearchBtn}
+            searchErr={searchErr}
           />
           <div className='main-info'>
             <Cities 
