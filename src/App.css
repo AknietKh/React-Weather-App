@@ -197,6 +197,11 @@
   color: #ffffff;
 }
 
+.weather-display__error-city {
+  color: #000000;
+  font-weight: bold;
+}
+
 .weather-info {
   display: flex;
   flex-direction: column;
