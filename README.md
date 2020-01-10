@@ -34,6 +34,6 @@ You will also see any lint errors in the console.
 Если после того как вы разрешили определить ваше текущее местоположение в окне справа от колонки "Выберите город" возникла бесконечная загрузка то вам необходимо выполнить следующие действия.<br/>
 Если вы пользуетесь браузером Google Chrom: <br/>
 ![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/chrome.png)
-<hr/><br/>
+<hr/>
 Если вы пользуетесь браузером Mozila Firefox: <br/>
 ![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/mozila.png)
