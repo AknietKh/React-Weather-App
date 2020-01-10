@@ -4,6 +4,7 @@ import '../App.css';
 function RequestError(props) {
  const errStatus = +props.errStatus;
  const errGeo = props.errGeo;
+ const activeCity = props.activeCity;
   return (
     <div className="weather-display">
       <div className="weather-display__error">
@@ -11,7 +12,7 @@ function RequestError(props) {
         {
           (errStatus >= 400 && errStatus < 500)  &&  
           <p>
-            Ошибка {errStatus} (Not Found).Город не найден в базе.<br/>
+            Ошибка {errStatus} (Not Found).Город <span className='weather-display__error-city'>{activeCity}</span> не найден в базе.<br/>
             Попробуйте ввести название на английском или попробуйте изменить поисковый запрос
           </p>
         }

@@ -60,8 +60,9 @@ class WeatherDisplay extends React.Component {
 
   render() {
     const {weatherData, err, loading} = this.state;
+    const {activeCity} = this.props;
     
-    if (err) return <RequestError errStatus={err}/>;
+    if (err) return <RequestError errStatus={err} activeCity={activeCity}/>;
     else if (loading) return <Loader/>;
 
     const weather = weatherData.weather[0];
