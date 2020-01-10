@@ -99,7 +99,7 @@ class App extends React.Component {
     if (!value) return 'no value';
 
     for (let i = 0; i < cities.length; i++) {
-      if (cities[i].city === value) return 'duplicate';
+      if (cities[i].city === value.trim()) return 'duplicate';
     }
     
     return 'true';
