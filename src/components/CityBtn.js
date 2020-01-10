@@ -1,32 +1,49 @@
 import React from 'react';
 import '../App.css';
 
-function CityBtn(props) {
-  function hadleClick(e) {
-   props.onCityClick(e.target);
+class CityBtn extends React.Component {
+  state = {
+    deleteBtn: null
   }
 
-  function handleDeleteBtnClick(e) {
+  hadleClick = (e) => {
+   this.props.onCityClick(e.target);
+  }
+
+  handleDeleteBtnClick = (e) => {
     e.preventDefault();
-    props.onDeleteBtnClick(e.target);
+    this.props.onDeleteBtnClick(e.target);
   }
 
-  return (
-    +props.activeCityId === props.id ?
-      <div className="city-wrapper city__active">
-        <div id={props.id} className="city" onClick={hadleClick}>
-          {props.name}
+  handleMouseEnter = (e) => {
+    this.setState({deleteBtn: true});
+  }
+
+  handleMouseLeave = (e) => {
+    this.setState({deleteBtn: false});
+  }
+
+  render () {
+    const {deleteBtn} = this.state;
+    const {id, name} = this.props;
+    const activeCityId = +this.props.activeCityId;
+    return (
+      activeCityId === id ?
+        <div className="city-wrapper city__active" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+          <div id={id} className="city" onClick={this.hadleClick}>
+            {name}
+          </div>
+          {deleteBtn && <button id={id} className="delete-city" onClick={this.handleDeleteBtnClick}>Удалить</button>}
         </div>
-        <button id={props.id} className="delete-city" onClick={handleDeleteBtnClick}>Удалить</button>
-      </div> 
-    : 
-      <div className="city-wrapper">
-        <div id={props.id} className="city" onClick={hadleClick}>
-        {props.name}
+        :
+        <div className="city-wrapper" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+          <div id={id} className="city" onClick={this.hadleClick}>
+            {name}
+          </div>
+          {deleteBtn && <button id={id} className="delete-city" onClick={this.handleDeleteBtnClick}>Удалить</button>}
         </div>
-        <button id={props.id} className="delete-city" onClick={handleDeleteBtnClick}>Удалить</button>
-      </div>
   )
+  }
 }
 
 export {CityBtn};
