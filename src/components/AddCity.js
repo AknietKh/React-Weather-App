@@ -12,19 +12,32 @@ function AddCity(props) {
     props.onClick(e);
   }
 
+  function handleKeyDown(e) {
+    props.onKeyDown(e);
+  }
+
+  function handleLocationClick(e) {
+    props.onLocationClick(e);
+  }
+
   return (
     <div className="search-wrapper">
       <div className="search">
-      <input 
-        type="text" 
-        className="search_input"
-        onChange={handleChange}
-        value={props.value}
-        placeholder="Погода в вашем городе..."
-      />
-      <button className="search_btn" onClick={handleClick}></button>
-		</div>
-    {props.searchErr === 'no value' && <div className="search-err-message"><span>Необходимо ввести название города</span></div>}
+        <input 
+          type="text" 
+          className="search_input"
+          onChange={handleChange}
+          value={props.value}
+          placeholder="Погода в вашем городе..."
+          onKeyDown={handleKeyDown}
+        />
+        <button id="searchBtn" className="search_btn" onClick={handleClick}></button>
+        <span className="search_location" onClick={handleLocationClick}>
+          <img className="search_location-img" src="https://img.icons8.com/color/48/000000/gps-device.png" alt='GPS'/>
+          Моё местоположение
+        </span>
+		  </div>
+    {props.searchErr === 'no value' && <div className="search-err-message"><span>Необходимо ввестиназвание города</span></div>}
     {props.searchErr === 'duplicate' && <div className="search-err-message"><span>Данный город уже был добавлен ранее</span></div>}
     </div>
   );
