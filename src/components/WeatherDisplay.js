@@ -40,15 +40,22 @@ class WeatherDisplay extends React.Component {
       this.setState({
         err: err
       })
-    })  }
+    }) 
+  }
 
   componentDidMount() {
-    const {activeCity} = this.props;
-    this.fetchData(activeCity);
+    const {activeCity,weatherDataByGeo} = this.props;
+    
+    weatherDataByGeo ? 
+    weatherDataByGeo && this.setState({weatherData: weatherDataByGeo, loading: false}) :
+    this.fetchData(activeCity);    
   }
 
   componentDidUpdate(prevProps) {
-    prevProps.activeCity !== this.props.activeCity && this.fetchData(this.props.activeCity)
+    const {activeCity, weatherDataByGeo} = this.props;
+    
+    prevProps.activeCity !== activeCity && this.fetchData(activeCity);
+    prevProps.weatherDataByGeo !== weatherDataByGeo && this.setState({weatherData: weatherDataByGeo, loading: false});
   }
 
   render() {
