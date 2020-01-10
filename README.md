@@ -2,9 +2,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## About project (dev version)
 
-Проект представляет из себя небольшое погодное одностраничное веб-приложение.
-Данные о погоде берутся с сайта [ openweathermap.org](https://openweathermap.org/).
-Ниже представлены скриншоты приложения.
+Проект представляет из себя небольшое погодное одностраничное веб-приложение.<br/>
+Данные о погоде берутся с сайта [openweathermap.org](https://openweathermap.org/).<br/>
+Само приложение доступно по [ссылке](https://aknietkh.github.io/React-Weather-App/)<br/>
+Как только приложение открывается будет запрошены данные о местоположении, если вы не дадите доступ то автоматическое определение местоположения и определение местоположения при клике на кнопку "Моё местоположение" не будет работать.<br/>
+<br/>
+После того как вы дадите разрешение на определение местоположения моэет возникнуть бесконечная загрузка. Что бы исправить это нужно следовать инструкциям из скриншота приведенным в конце данного документа.
 
 Приложение умеет:<br />
 1. Автоматически запрашивать погоду по координатам пользователя - этот город становится городом по умолчанию.<br/>
@@ -26,5 +29,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/weather-app.png)
-![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/weather-app__errors.png)
+## Устранение бесконечной загрузки при разрешение на определение местоположения
+
+Если после того как вы разрешили определить ваше текущее местоположение в окне справа от колонки "Выберите город" возникла бесконечная загрузка то вам необходимо выполнить следующие действия.<br/>
+Если вы пользуетесь браузером Google Chrom: <br/>
+![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/chrome.png)
+<br/>
+Если вы пользуетесь браузером Mozila Firefox: <br/>
+![Скриншот приложения](https://github.com/AknietKh/React-Weather-App/raw/master/public/mozila.png)
