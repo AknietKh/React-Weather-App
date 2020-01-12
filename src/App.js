@@ -49,7 +49,7 @@ class App extends React.Component {
 
   fetchDataByGeo(latitude, longitude) {
     const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
-    const URL = 'http://api.openweathermap.org/data/2.5/weather?lat=' + 
+    const URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
           latitude + '&lon=' + longitude + `&units=metric&lang=ru&APPID=${APPID}`;
 
     this.setState({loading: true});

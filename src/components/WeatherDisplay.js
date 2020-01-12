@@ -16,7 +16,7 @@ class WeatherDisplay extends React.Component {
 
   fetchData(activeCity) {
     const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
-    const URL = 'http://api.openweathermap.org/data/2.5/weather?q=' + 
+    const URL = 'https://api.openweathermap.org/data/2.5/weather?q=' + 
                 activeCity + `&units=metric&lang=ru&APPID=${APPID}`;
 
     this.setState({loading: true});
@@ -66,7 +66,7 @@ class WeatherDisplay extends React.Component {
     else if (loading) return <Loader/>;
 
     const weather = weatherData.weather[0];
-    const weatherIcon = `http://openweathermap.org/img/wn/${weather.icon}.png`
+    const weatherIcon = `https://openweathermap.org/img/wn/${weather.icon}.png`
     
     return (
       <div className="weather-display">
