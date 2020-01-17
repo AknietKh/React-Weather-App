@@ -100,7 +100,7 @@ class App extends React.Component {
   }
 
   handleCityClick(activeCity) {
-    this.setState({activeCityId: activeCity.id, errGeo: null})
+    this.setState({activeCityId: activeCity.id, errGeo: null, searchErr: ''})
   }
 
   handleInputChange(input) {
