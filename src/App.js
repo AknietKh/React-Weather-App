@@ -6,21 +6,6 @@ import { Loader } from './components/Loader';
 import { RequestError } from './components/RequestError';
 import './App.css'
 
-let CITIES = [
-  {
-    "id": 1,
-    "city": "New York"
-  },
-  {
-    "id": 2,
-    "city": "London"
-  },
-  {
-    "id": 3,
-    "city": "Tokyo"
-  }
-]
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +20,7 @@ class App extends React.Component {
     this.geoLocation = this.geoLocation.bind(this);
 
     this.state = {
-      cities: CITIES,
+      cities: localStorage.getItem('cities') ? JSON.parse(localStorage.getItem('cities')) : [],
       activeCityId: null,
       value: '',
       searchErr: '',
@@ -50,6 +35,7 @@ class App extends React.Component {
     const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
     const URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
           latitude + '&lon=' + longitude + `&units=metric&lang=ru&APPID=${APPID}`;
+
     this.setState({loading: true});
 
     fetch(URL).then(response => {
@@ -104,8 +90,10 @@ class App extends React.Component {
     const {cities} = this.state;
     if (!value) return 'no value';
 
-    for (let i = 0; i < cities.length; i++) {
-      if (cities[i].city === value.trim()) return 'duplicate';
+    if(cities) {
+      for (let i = 0; i < cities.length; i++) {
+        if (cities[i].city === value.trim()) return 'duplicate';
+      }
     }
     
     return 'true';
@@ -129,13 +117,15 @@ class App extends React.Component {
       //если введеные в данные в поиск валидны, то формируем объект, который пушим в клон массива городов и изменяем состояние компонента
       if (validateResult === 'true') {
         const newCity = {
-          id: cities[cities.length-1].id + 1,
+          id: cities.length > 0 ? cities[cities.length-1].id + 1 : 1,
           city: validValue
         }
         citiesClone.push(newCity);
+
+        localStorage.setItem('cities', JSON.stringify(citiesClone));
         
         this.setState({
-          cities: citiesClone,
+          cities: JSON.parse(localStorage.getItem('cities')),
           activeCityId: newCity.id, 
           value: '',
           searchErr: '',
@@ -152,12 +142,15 @@ class App extends React.Component {
     const citiesClone = cities.slice();
     
     for (let i = 0; i < citiesClone.length; i++) {
-      if (citiesClone[i].id === +deleteBtn.id) citiesClone.splice(i, 1);
+      if (citiesClone[i].id === +deleteBtn.id) {
+        citiesClone.splice(i, 1);
+        localStorage.setItem('cities', JSON.stringify(citiesClone))
+      }
     }
     
     this.setState({
-      activeCityId: '',
-      cities: citiesClone
+      activeCityId: deleteBtn.id - 1,
+      cities: JSON.parse(localStorage.getItem('cities'))
     });
   }
 
@@ -179,7 +172,6 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {cities, weatherDataByGeo} = this.state;
-    const citiesClone = cities.slice();
 
     if (prevState.weatherDataByGeo !== weatherDataByGeo) {
       let duplicate = false;
@@ -189,21 +181,23 @@ class App extends React.Component {
       for (let i = 0; i < cities.length; i++) {
         if (cities[i].city === weatherDataByGeo.name) {
           duplicate = true;
-          this.setState({activeCityId: i+1});
+          this.setState({activeCityId: cities[i].id});
         }
       }
 
       //Добавляет новый город в navbar, полученный из navigator.location (авто-определения местоположения 
       //или при нажатии на "Мое местоположение"). Город добавляется только если такого города еще нет в navbar-е
       if (!duplicate) {
+        const citiesClone = cities.slice();
         const newCity = {
-          id: cities[cities.length-1].id + 1,
+          id: cities.length > 0 ? cities[cities.length-1].id + 1 : 1,
           city: weatherDataByGeo.name
         }
         citiesClone.push(newCity);
         
+        localStorage.setItem('cities', JSON.stringify(citiesClone));
         this.setState({
-          cities: citiesClone,
+          cities: JSON.parse(localStorage.getItem('cities')),
           activeCityId: newCity.id
         })
       }
@@ -216,7 +210,7 @@ class App extends React.Component {
     const {cities, activeCityId, value, searchErr} = this.state;
     const { weatherDataByGeo, loading, errGeo} = this.state;
     let activeCity;
-    cities.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
+    cities.length && cities.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
 
     return (
       <React.Fragment>
