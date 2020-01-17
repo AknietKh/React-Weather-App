@@ -63,6 +63,7 @@
   border: 2px solid #1565c0;
   background-color: #5e92f3;
   cursor: pointer;
+  opacity: 1;
 }
 
 .search_btn::before {
@@ -75,21 +76,32 @@
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath fill='%23fff' d='M9.996 17.991a7.996 7.996 0 117.995-7.995 1 1 0 01-2 0 5.996 5.996 0 10-1.756 4.24l.707-.708 7.115 7.115a1 1 0 01-1.414 1.414l-5.745-5.745a7.967 7.967 0 01-4.902 1.68z'/%3E%3C/svg%3E");
 }
 
-.search_location {
-  margin-left: 20px;
-  text-decoration: underline;
-  cursor: pointer;
+.search_btn:hover {
   opacity: 0.8;
-  font-size: 14px;
 }
 
-.search_location:hover {
-  text-decoration: none;
+.search_location {
+  position: relative;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid #1565c0;
+  background-color: #5e92f3;
+  cursor: pointer;
+  margin-left: 10px;
+  cursor: pointer;
   opacity: 1;
 }
 
+.search_location:hover {
+  opacity: 0.8;
+}
+
 .search_location-img {
-  width: 15px;
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 80%;
   transform: rotate(45deg);
 }
 
@@ -246,4 +258,24 @@
 @keyframes loader {
   0% {transform: rotate(0deg);}
   100% {transform: rotate(360deg);}
+}
+
+@media (max-width: 800px) {
+  .search-wrapper {
+    width: 90%
+  }
+  .main-info {
+    flex-direction: column;
+  }
+  .cities-wrapper {
+    width: 100%
+  }
+  .weather-display {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .city-status {
+    align-items: center;
+    font-size: 22px;
+  }
 }
