@@ -3,10 +3,8 @@ import {Cities} from './components/Cities';
 import {WeatherDisplay} from './components/WeatherDisplay';
 import {AddCity} from './components/AddCity';
 import { Loader } from './components/Loader';
-import './App.css'
 import { RequestError } from './components/RequestError';
-
-// import { CityBtn } from './components/CityBtn';
+import './App.css'
 
 let CITIES = [
   {
@@ -29,7 +27,7 @@ class App extends React.Component {
 
     this.handleCityClick = this.handleCityClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSearchBtn = this.handleSearchBtn.bind(this);
+    this.handleSearchBtnClick = this.handleSearchBtnClick.bind(this);
     this.handleDeleteCityBtnClick = this.handleDeleteCityBtnClick.bind(this);
     this.handleLocationClick = this.handleLocationClick.bind(this);
     this.validate = this.validate.bind(this);
@@ -47,11 +45,11 @@ class App extends React.Component {
     }
   }
 
-  fetchDataByGeo(latitude, longitude) {
+  //Делает запрос на API по значениям координат, полученных из navigator.location
+  fetchDataByGeo(latitude, longitude) {    
     const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
     const URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
           latitude + '&lon=' + longitude + `&units=metric&lang=ru&APPID=${APPID}`;
-
     this.setState({loading: true});
 
     fetch(URL).then(response => {
@@ -62,7 +60,6 @@ class App extends React.Component {
       }
     })
     .then(data => {
-      console.log(data);
       this.setState({
         weatherDataByGeo: data,
         loading: false
@@ -73,19 +70,28 @@ class App extends React.Component {
     })
   }
 
+  //функция геолокации. Определяет текущее местоположение пользователя
   geoLocation() {
     if("geolocation" in  navigator){
       console.log('navigator');
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log("loading");
-          this.fetchDataByGeo(position.coords.latitude, position.coords.longitude)
-        },
-        (err) => {
-          console.log(err.code, err.message);
-          this.setState({errGeo: err});
-        } //Если данные не получены, то показывать ReqestError на 177 строке
-      )
+      const geo_options = {
+        enableHighAccuracy: true, 
+        maximumAge        : 0, 
+        timeout           : 27000
+      };
+
+      const geo_success = (position) => {
+        console.log(position.coords);
+        this.fetchDataByGeo(position.coords.latitude, position.coords.longitude)
+      }
+
+      const geo_err = (err) => {
+        console.log(err.code, err.message);
+        this.setState({errGeo: err});
+      }
+      
+      navigator.geolocation.getCurrentPosition(geo_success, geo_err, geo_options);
+
     } else {
       alert('Геолакация не поддерживается вашим браузером.'
             + 'Используйте другой браузер или обновите ваш браузер до последней версии.' )
@@ -110,20 +116,21 @@ class App extends React.Component {
   }
 
   handleInputChange(input) {
-    const value = input.value.slice(0,1).toUpperCase() + input.value.slice(1).toLowerCase();
-    this.setState({value: value});
+    this.setState({value: input.value});
   }
 
-  handleSearchBtn(event) {
+  handleSearchBtnClick(event) {
     if (event.key === 'Enter' || event.target.id === 'searchBtn') {
       const {cities, value} = this.state;
-      const validateResult = this.validate(value);
+      const validValue = value.slice(0,1).toUpperCase() + value.slice(1).toLowerCase();
+      const validateResult = this.validate(validValue);
       const citiesClone = cities.slice();
       
+      //если введеные в данные в поиск валидны, то формируем объект, который пушим в клон массива городов и изменяем состояние компонента
       if (validateResult === 'true') {
         const newCity = {
           id: cities[cities.length-1].id + 1,
-          city: value
+          city: validValue
         }
         citiesClone.push(newCity);
         
@@ -173,15 +180,22 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const {cities, weatherDataByGeo} = this.state;
     const citiesClone = cities.slice();
+
     if (prevState.weatherDataByGeo !== weatherDataByGeo) {
-      let duplicate = true;
+      let duplicate = false;
+
+      //Сделано для того чтобы при нажатии на 'Мое местоположение' в navbar-е не дублировался город,
+      //который определен с помощью местоположения пользователя 
       for (let i = 0; i < cities.length; i++) {
         if (cities[i].city === weatherDataByGeo.name) {
-          duplicate = false;
+          duplicate = true;
           this.setState({activeCityId: i+1});
         }
       }
-      if (duplicate) {
+
+      //Добавляет новый город в navbar, полученный из navigator.location (авто-определения местоположения 
+      //или при нажатии на "Мое местоположение"). Город добавляется только если такого города еще нет в navbar-е
+      if (!duplicate) {
         const newCity = {
           id: cities[cities.length-1].id + 1,
           city: weatherDataByGeo.name
@@ -214,9 +228,9 @@ class App extends React.Component {
           <AddCity  
             value={value}
             onChange={this.handleInputChange}
-            onClick={this.handleSearchBtn}
+            onClick={this.handleSearchBtnClick}
             searchErr={searchErr}
-            onKeyDown={this.handleSearchBtn}
+            onKeyDown={this.handleSearchBtnClick}
             onLocationClick={this.handleLocationClick}
           />
           <div className='main-info'>
@@ -227,6 +241,8 @@ class App extends React.Component {
               onDeleteCityBtnClick={this.handleDeleteCityBtnClick}
             />
             {
+            //Если не идет загрузка И не возникли ошибки при геолокации И есть данные о погоде,
+            //определенные по координатам пользователя ИЛИ выбран город в navbar-e, то показывать компонент WeatherDisplay
               !loading && !errGeo && (activeCityId || weatherDataByGeo ? 
               <WeatherDisplay activeCity={activeCity} weatherDataByGeo={weatherDataByGeo}/> : 
               <div className="weather-display">
