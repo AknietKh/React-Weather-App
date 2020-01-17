@@ -33,10 +33,14 @@ const AddCity = (props) => {
           onKeyDown={handleKeyDown}
         />
         <button id="searchBtn" className="search_btn" onClick={handleClick}></button>
-        <span className="search_location" onClick={handleLocationClick}>
-          <img className="search_location-img" src="https://img.icons8.com/color/48/000000/gps-device.png" alt='GPS'/>
-          Моё местоположение
-        </span>
+        <div className="search_location" onClick={handleLocationClick}>
+          <img 
+            className="search_location-img" 
+            src="https://img.icons8.com/color/48/000000/gps-device.png" 
+            alt='Моё местоположение'
+            title='Моё местоположение'
+          />
+        </div>
 		  </div>
     {props.searchErr === 'no value' && <div className="search-err-message"><span>Необходимо ввестиназвание города</span></div>}
     {props.searchErr === 'duplicate' && <div className="search-err-message"><span>Данный город уже был добавлен ранее</span></div>}
