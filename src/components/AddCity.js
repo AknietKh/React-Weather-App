@@ -1,22 +1,23 @@
 import React from 'react';
 import '../App.css';
 
-function AddCity(props) {
-  function handleChange(e) {
+//Компонент рендерит поисковую строку и сообщения о невалидных данных
+const AddCity = (props) => {
+  const handleChange = (e) => {
     e.preventDefault();
     props.onChange(e.target);
   }
 
-  function handleClick(e) {
+  const handleClick = (e) => {
     e.preventDefault();
     props.onClick(e);
   }
 
-  function handleKeyDown(e) {
+  const handleKeyDown = (e) => {
     props.onKeyDown(e);
   }
 
-  function handleLocationClick(e) {
+  const handleLocationClick = (e) => {
     props.onLocationClick(e);
   }
 

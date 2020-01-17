@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-function Loader(props) {
+const Loader = (props) => {
   return (
     <div className="weather-display">
       <div className="load-5">

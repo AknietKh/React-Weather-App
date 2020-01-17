@@ -1,7 +1,8 @@
 import React from 'react';
 import '../App.css';
 
-function RequestError(props) {
+//Компонент, который рендерит ошибку, если не получены данные при запросе на API
+const RequestError = (props) => {
  const errStatus = +props.errStatus;
  const errGeo = props.errGeo;
  const activeCity = props.activeCity;
@@ -18,7 +19,7 @@ function RequestError(props) {
         }
         {
           (errStatus >= 500 && errStatus < 600)  && 
-          <p>Сервер не отвечает, ошибка {errStatus}. Попробуйте позже.</p>
+          <p>Ошибка на стороне сервера, ошибка {errStatus}. Попробуйте позже.</p>
         }
         {
           errGeo && 

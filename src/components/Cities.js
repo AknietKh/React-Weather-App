@@ -2,19 +2,18 @@ import React from 'react';
 import {CityBtn} from './CityBtn';
 import '../App.css';
 
-function Cities(props){
-
-  function handleDeleteBtnClick(deleteBtn) {
+//Компонент, который является navbar-ом, в котором рендерятся кнопки CityBtn
+const Cities = (props) => {
+  const handleDeleteBtnClick = (deleteBtn) => {
     props.onDeleteCityBtnClick(deleteBtn);
   }
 
-  
   const {data, onCityClick, activeCityId} = props;
 
   return (
-    <div className="cities-wrapper">
+    <nav className="cities-wrapper">
       <h2 className="cities-wrapper__label">Выберите город</h2>
-      <div className="cities">
+      <ul className="cities">
         {data.map(element => 
             <CityBtn 
               key={element.id} 
@@ -25,8 +24,8 @@ function Cities(props){
               activeCityId={activeCityId}
             />
         )}
-      </div>
-    </div>
+      </ul>
+    </nav>
   )
 
 }

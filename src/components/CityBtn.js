@@ -1,6 +1,8 @@
 import React from 'react';
 import '../App.css';
 
+//Компонент рендерит кнопку с названием города в navbar-e.
+//Так же рендерится кнопка "Удалить" при наведении на CityBtn
 class CityBtn extends React.Component {
   state = {
     deleteBtn: null
@@ -29,19 +31,19 @@ class CityBtn extends React.Component {
     const activeCityId = +this.props.activeCityId;
     return (
       activeCityId === id ?
-        <div className="city-wrapper city__active" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+        <li className="city-wrapper city__active" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
           <div id={id} className="city" onClick={this.hadleClick}>
             {name}
           </div>
           {deleteBtn && <button id={id} className="delete-city" onClick={this.handleDeleteBtnClick}>Удалить</button>}
-        </div>
+        </li>
         :
-        <div className="city-wrapper" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+        <li className="city-wrapper" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
           <div id={id} className="city" onClick={this.hadleClick}>
             {name}
           </div>
           {deleteBtn && <button id={id} className="delete-city" onClick={this.handleDeleteBtnClick}>Удалить</button>}
-        </div>
+        </li>
   )
   }
 }
