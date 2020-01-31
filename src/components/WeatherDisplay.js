@@ -71,7 +71,7 @@ class WeatherDisplay extends React.Component {
     else if (loading) return <Loader/>;
 
     const weather = weatherData.weather[0];
-    const weatherIcon = `https://openweathermap.org/img/wn/${weather.icon}.png`
+    const weatherIcon = `https://openweathermap.org/img/wn/${weather.icon}.png`;
     
     return (
       <div className="weather-display">

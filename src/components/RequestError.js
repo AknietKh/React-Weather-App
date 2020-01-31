@@ -3,9 +3,10 @@ import '../App.css';
 
 //Компонент, который рендерит ошибку, если не получены данные при запросе на API
 const RequestError = (props) => {
- const errStatus = +props.errStatus;
- const errGeo = props.errGeo;
- const activeCity = props.activeCity;
+  const errStatus = +props.errStatus;
+  const errGeo = props.errGeo;
+  const activeCity = props.activeCity;
+ 
   return (
     <div className="weather-display">
       <div className="weather-display__error">
