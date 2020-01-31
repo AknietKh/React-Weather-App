@@ -20,7 +20,7 @@ class App extends React.Component {
     this.geoLocation = this.geoLocation.bind(this);
 
     this.state = {
-      cities: localStorage.getItem('cities') ? JSON.parse(localStorage.getItem('cities')) : [],
+      cities: localStorage.getItem('cities') ? JSON.parse( localStorage.getItem('cities') ) : [],
       activeCityId: null,
       value: '',
       searchErr: '',
@@ -32,7 +32,7 @@ class App extends React.Component {
 
   //Делает запрос на API по значениям координат, полученных из navigator.location
   fetchDataByGeo(latitude, longitude) {    
-    const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2'
+    const APPID = 'ef598dd48091a3a2eb6a63ef6c4d75b2';
     const URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
           latitude + '&lon=' + longitude + `&units=metric&lang=ru&APPID=${APPID}`;
 
@@ -42,7 +42,7 @@ class App extends React.Component {
       if (response.ok) {
         return response.json(); 
       } else {
-        throw response.status
+        throw response.status;
       }
     })
     .then(data => {
@@ -59,7 +59,6 @@ class App extends React.Component {
   //функция геолокации. Определяет текущее местоположение пользователя
   geoLocation() {
     if("geolocation" in  navigator){
-      console.log('navigator');
       const geo_options = {
         enableHighAccuracy: true, 
         maximumAge        : 0, 
@@ -100,7 +99,7 @@ class App extends React.Component {
   }
 
   handleCityClick(activeCity) {
-    this.setState({activeCityId: activeCity.id, errGeo: null, searchErr: ''})
+    this.setState({activeCityId: activeCity.id, errGeo: null, searchErr: ''});
   }
 
   handleInputChange(input) {
@@ -120,20 +119,22 @@ class App extends React.Component {
           id: cities.length > 0 ? cities[cities.length-1].id + 1 : 1,
           city: validValue
         }
-        citiesClone.push(newCity);
 
+        citiesClone.push(newCity);
         localStorage.setItem('cities', JSON.stringify(citiesClone));
         
         this.setState({
-          cities: JSON.parse(localStorage.getItem('cities')),
+          cities: JSON.parse( localStorage.getItem('cities') ),
           activeCityId: newCity.id, 
           value: '',
           searchErr: '',
           errGeo: null
-        })
+        });
       } else if (validateResult === 'duplicate') {
-        this.setState({value: '', searchErr: 'duplicate', errGeo: null})
-      } else this.setState({searchErr: 'no value', errGeo: null})
+        this.setState({value: '', searchErr: 'duplicate', errGeo: null});
+      } else {
+        this.setState({searchErr: 'no value', errGeo: null});
+      }
     }
   }
 
@@ -150,23 +151,27 @@ class App extends React.Component {
     
     this.setState({
       activeCityId: deleteBtn.id - 1,
-      cities: JSON.parse(localStorage.getItem('cities'))
+      cities: JSON.parse( localStorage.getItem('cities') )
     });
   }
 
   handleLocationClick(e) {
     const {errGeo} = this.state;
+
     errGeo && this.setState({errGeo: null});
     this.geoLocation();
   }
 
   componentDidMount() {
-    alert(`
-    Для корректной работы приложения необходимо дать разрешение на доступ к геоданным.
-    (Нажмите "разрешить" в следующем всплывающем окне в правом углу поисковой строки браузера).
-    Это необходимо для автоматического определения местоположения и последующего определения
-    местоположения при запросе.
-    `)
+    if (!localStorage.getItem('cities')) {
+      alert(`
+        Для корректной работы приложения необходимо дать разрешение на доступ к геоданным.
+        (Нажмите "разрешить" в следующем всплывающем окне в правом углу поисковой строки браузера).
+        Это необходимо для автоматического определения местоположения и последующего определения
+        местоположения при запросе.`
+      )
+    }
+
     this.geoLocation();
   }
 
@@ -193,11 +198,12 @@ class App extends React.Component {
           id: cities.length > 0 ? cities[cities.length-1].id + 1 : 1,
           city: weatherDataByGeo.name
         }
+
         citiesClone.push(newCity);
-        
         localStorage.setItem('cities', JSON.stringify(citiesClone));
+
         this.setState({
-          cities: JSON.parse(localStorage.getItem('cities')),
+          cities: JSON.parse( localStorage.getItem('cities') ),
           activeCityId: newCity.id
         })
       }
@@ -208,8 +214,9 @@ class App extends React.Component {
 
   render() {
     const {cities, activeCityId, value, searchErr} = this.state;
-    const { weatherDataByGeo, loading, errGeo} = this.state;
+    const {weatherDataByGeo, loading, errGeo} = this.state;
     let activeCity;
+    
     cities.length && cities.forEach((item) => item.id === +activeCityId ? activeCity = item.city : '')
 
     return (
