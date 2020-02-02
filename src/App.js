@@ -231,7 +231,7 @@ class App extends React.Component {
             onChange={this.handleInputChange}
             onClick={this.handleSearchBtnClick}
             searchErr={searchErr}
-            onKeyDown={this.handleSearchBtnClick}
+            onEnterKeyDown={this.handleSearchBtnClick}
             onLocationClick={this.handleLocationClick}
           />
           <div className='main-info'>

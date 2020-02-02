@@ -8,13 +8,12 @@ const AddCity = (props) => {
     props.onChange(e.target);
   }
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleSearchBtnClick = (e) => {
     props.onClick(e);
   }
 
   const handleKeyDown = (e) => {
-    props.onKeyDown(e);
+    props.onEnterKeyDown(e);
   }
 
   const handleLocationClick = (e) => {
@@ -32,7 +31,7 @@ const AddCity = (props) => {
           placeholder="Погода в вашем городе..."
           onKeyDown={handleKeyDown}
         />
-        <button id="searchBtn" className="search_btn" onClick={handleClick}></button>
+        <button id="searchBtn" className="search_btn" onClick={handleSearchBtnClick}></button>
         <div className="search_location" onClick={handleLocationClick}>
           <img 
             className="search_location-img" 
